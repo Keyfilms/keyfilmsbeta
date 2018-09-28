@@ -1,0 +1,14 @@
+<h1><%= t('.title') %></h1>
+
+<% if user_signed_in? && current_user.admin? %>
+  <%= link_to 'Новая статья', new_admin_post_path, class: 'btn btn-outline-primary btn-sm' %>
+  <%= link_to 'Изминить категорию', admin_categories_path, class: 'btn btn-outline-secondary btn-sm' %>
+  <br>
+<% end %>
+
+
+<section id='posts'>
+  <%= render @posts %>
+</section>
+
+<%= will_paginate @posts, renderer: 'BootstrapPaginationHelper::LinkRenderer' %>

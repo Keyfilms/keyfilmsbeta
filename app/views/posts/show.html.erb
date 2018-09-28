@@ -1,0 +1,56 @@
+<%= render 'shared/breadcrumb', category: @post.category %>
+
+<article class="post" xmlns="http://www.w3.org/1999/html">
+  <section class="post-head">
+    <h1><%= @post.title %></h1>
+    <small>
+      <time><%= @post.created_at.to_date.strftime("%d %B, %Y") %></time>
+      <% if @post.category.present? %>
+        |
+        <%= link_to @post.category.name, @post.category %>
+      <% end %>
+      <% if user_signed_in? && current_user.admin? %>
+        |
+        <%= link_to 'Изменить', edit_admin_post_path(@post) %>
+        |
+        <%= link_to 'Удалить', admin_post_path(@post), method: :delete, data: { confirm: 'Вы уверены?' } %>
+      <% end %>
+    </small>
+  </section>
+
+  <section class="post-body">
+    <%= image_tag @post.image.url(:large), class: 'img-show' if @post.image? %>
+    <div style="padding-bottom: 10px;margin-bottom: 10px;margin-top:-350px; margin-left: 280px;">
+    <table style="margin: 0 30px;">
+      <tbody>
+      <tr>
+        <td style="color: #111111;padding: 10px;"><b style="font-weight: 500;">Год:</b></td>
+        <td style="color: #111111;padding: 10px;"><p><%= @post.fyear %></p></td>
+      </tr>
+      <tr>
+        <td style="color: #111111;padding: 10px;"><b style="font-weight: 500;">Режисёр:</b></td>
+        <td style="color: #111111;padding: 10px;"><p><%= @post.fdirector %></p></td>
+      </tr>
+      <tr>
+      <td style="color: #111111;padding: 10px;"><b style="font-weight: 500;">Страна:</b></td>
+      <td style="color: #111111;padding: 10px;"><p><%= @post.fcountry %></p></td>
+      </tr>
+      <tr>
+        <td style="color: #111111;padding: 10px;"><b style="font-weight: 500;">Время:</b></td>
+        <td style="color: #111111;padding: 10px;"><p><%= @post.ftime %></p></td>
+      </tr>
+      <tr>
+        <td style="color: #111111;padding: 10px;"><b style="font-weight: 500;">Качевство:</b></td>
+        <td style="color: #111111;padding: 10px;"><p><%= @post.fdefault %></p></td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+    <p><%= @post.body.html_safe %></p>
+
+
+    <br>
+    <iframe src="<%= @post.player %>" frameborder="0" allowfullscreen style="height: 480px; width: 820px;"></iframe>
+  </section>
+</article>
+
